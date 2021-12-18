@@ -1,10 +1,8 @@
-# Getting Started with Create React App
+## Remember to: 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### `npm i`
 
-## Available Scripts
-
-In the project directory, you can run:
+To install node_modules
 
 ### `npm start`
 
@@ -14,57 +12,106 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+# Assignment: 
+# Google task clone ☑️
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You are in charge of building the API for a to-do list app that resembles Google Task. 
 
-### `npm run build`
+You are going to need 2 main tables, **tasks** and **planners.**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```jsx
+//TASK STRUCTURE: 
+	id: PK, UUID
+	content: string, REQUIRED
+	done: boolean, REQUIRED
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+//PLANNER STRUCTURE
+	id: PK, UUID
+	name: string, REQUIRED
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+//IMPORTANT! I have not included the FKs that will get created with the relation
+```
 
-### `npm run eject`
+## API info:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Each task is assigned to a planner. (Create a table relation based on this)
+- Remember to add error handling in your API.
+- The API should be deployed on heroku
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Endpoints:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### GET /task
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+returns ONLY tasks who are not marked as done yet 
 
-## Learn More
+### POST /task
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+creates a new task and returns it
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### PUT /task/:id
 
-### Code Splitting
+edits the selected task and returns an updated list of tasks (not marked as done)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### DELETE /task/:id
 
-### Analyzing the Bundle Size
+deleted the selected task
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### GET /planner
 
-### Making a Progressive Web App
+returns ALL planners and the respective tasks 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### POST /planner
 
-### Advanced Configuration
+creates a new planner and returns it
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### PUT /planner/:id
 
-### Deployment
+edits the selected planner and returns an updated list of planners
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### DELETE /planner/:id
 
-### `npm run build` fails to minify
+deleted the selected planner and all tasks bound to it
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+When you are done with the API, fork this repo (frontend) and connect the two projects. 
+
+## Frontend info:
+
+You should not need to change the styling/logic of components, but here's a quick rundown, as you might need some of this info to make sure everything works smoothly. 
+
+Most of your fetching should be in App.js to ensure a “single source of truth”. 
+
+You job will be mostly connecting and making sure the right tasks are showing in the right place.
+
+Components: 
+
+- Dropdown:
+    - Props:
+        - fetchSelPlanners: function, passes the selected planner to App.js, takes two params, the tasks for the selected planner and the id of the selected id.
+        - planners: array of planners
+    - Role: display the planners in a dropdown, show the selected planner
+- Option:
+    - Props: plannerName: string
+    - Role: display the planner name. When clicked, it will set the planner as selected in Dropdown.jsx
+- Modal:
+    - Note: You **will** need to do some fetching in here
+    - Props:
+        - isOpen: boolean
+        - close: function, closes the modal
+        - type: string, renders either the add task modal or the add planner modal
+        - planners: array of planners
+    - Role: add tasks and planners
+- SingleTask
+    - Props:
+        - content: string, the actual to-do
+        - id: the task id from the db
+        - setDone: function, takes the id as param and **should call the api to set the task to done (this is something you should take care of).**
+        
+
+# Extra:
+
+If you are done with all of the above, the frontend if connected, working, and the API deployed, the tasks you add are showing up updated etc... feel free to add all the extras (try to keep them BE focused) you want. Some examples might be: 
+
+- Task history
+- Search bar for the tasks
+- Color customization of the planners (e.g. "Work" planner's task show up in pink)
+- Pagination / Limit / Order
