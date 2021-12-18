@@ -1,0 +1,29 @@
+.single__wrap {
+    width: 200px;
+    height: 35px;
+    background-color: #b2f7b9;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+div.single__content {
+    margin-left: 5px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    user-select: none;
+}
+
+div.single__checkmark {
+    display: flex;
+    align-items: center;
+}

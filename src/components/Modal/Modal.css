@@ -1,0 +1,81 @@
+
+.modal__bg {
+    background-color: grey;
+    height: 100vh;
+    width: 100vw;
+
+    opacity: .5;
+
+    position: fixed;
+    top: 0;
+}
+
+.modal__controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.modal__inner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    width: 300px;
+    height: fit-content;
+    
+    transform: translate(-50%, -50%);
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    border-radius: 10px;
+    padding: 10px;
+}
+
+input {
+    width: 60%;
+    height: 25px;
+
+    border: none;
+    border-radius: 10px;
+
+    padding-left: 10px;
+
+    background-color: #B2F7B9;
+}
+
+small {
+    color: grey;
+}
+
+.modal__planners {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.modal__planners .option__modal {
+    background-color: #B2F7B9;
+
+    border-radius: 20px;
+    border: none;
+    
+    margin-top: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.option__modal--click {
+    border-radius: 20px;
+    border: none;
+    
+    margin-top: 10px;
+    padding: 5px;
+    margin: 5px;
+    background-color: #47F367;
+}
