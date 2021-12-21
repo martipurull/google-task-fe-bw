@@ -8,6 +8,8 @@ import { Modal } from "./components/Modal/Modal";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [taskIdToChange, setTaskIdToChange] = useState('')
+  const [taskToChangeIsDone, setTaskToChangeIsDone] = useState(false)
   const [planners, setPlanners] = useState([]);
   const [open, setOpen] = useState(false);
   const [openPlanner, setOpenPlanner] = useState(false);
@@ -27,7 +29,25 @@ function App() {
     }
   }
 
+  const setTaskAsDone = async () => {
+    try {
+      const request = await fetch(`${REACT_APP_URL}/task/${taskIdToChange}`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT',
+        body: JSON.stringify({ done: taskToChangeIsDone })
+      })
+      return await request.json()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => fetchPlanners(), [])
+  useEffect(() => setTaskAsDone(), [taskToChangeIsDone])
+
 
   return (
     <>
@@ -54,7 +74,10 @@ function App() {
         </div>
 
         {tasks?.map((task) => {
-          return <SingleTask key={task.id} content={task.content} id={task.id} setDone={() => { }} />;
+          return <SingleTask key={task.id} content={task.content} id={task.id} setDone={(taskId, isDone) => {
+            setTaskIdToChange(taskId)
+            setTaskToChangeIsDone(isDone)
+          }} />;
         })}
       </div>
       <Modal type="task" planners={planners} isOpen={open} close={() => setOpen(false)} />
