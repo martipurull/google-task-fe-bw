@@ -15,7 +15,7 @@ function App() {
 
   const fetchPlanners = async () => {
     try {
-      const response = await fetch('/planners')
+      const response = await fetch(`${REACT_APP_URL}/planner`)
       if (response.ok) {
         const loadedPlanners = await response.json()
         setPlanners(loadedPlanners)
