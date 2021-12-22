@@ -14,14 +14,14 @@ export const Modal = ({ isOpen, close, type, planners }) => {
     console.log(event.key);
     if (event.key === "Enter") {
       try {
-        const request = await fetch(`${REACT_APP_URL}/task`, {
+        const request = await fetch(`${process.env.REACT_APP_URL}/task`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
-          method: 'POST',
-          body: JSON.stringify(newTask)
-        })
+          method: "POST",
+          body: JSON.stringify(newTask),
+        });
         return await request.json()
       } catch (error) {
         console.log(error)
@@ -40,14 +40,14 @@ export const Modal = ({ isOpen, close, type, planners }) => {
     console.log(event.key);
     if (event.key === "Enter") {
       try {
-        const request = await fetch(`${REACT_APP_URL}/planner`, {
+        const request = await fetch(`${process.env.REACT_APP_URL}/planner`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
-          method: 'POST',
-          body: JSON.stringify({ name: newPlannerName })
-        })
+          method: "POST",
+          body: JSON.stringify({ name: newPlannerName }),
+        });
         return await request.json()
       } catch (error) {
         console.log(error)
