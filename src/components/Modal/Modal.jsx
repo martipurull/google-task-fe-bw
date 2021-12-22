@@ -6,9 +6,9 @@ export const Modal = ({ isOpen, close, type, planners }) => {
   const [newTask, setNewTask] = useState({
     plannerId: select,
     content: "",
-    done: false
+    done: false,
   });
-  const [newPlannerName, setNewPlannerName] = useState('')
+  const [newPlannerName, setNewPlannerName] = useState("");
 
   const handleAddTask = async (event) => {
     console.log(event.key);
@@ -22,19 +22,19 @@ export const Modal = ({ isOpen, close, type, planners }) => {
           method: "POST",
           body: JSON.stringify(newTask),
         });
-        return await request.json()
+        close();
+        return await request.json();
       } catch (error) {
-        console.log(error)
-        throw new Error(error)
+        console.log(error);
+        throw new Error(error);
       }
-      close();
     } else {
       setNewTask({
         ...newTask,
-        content: event.target.value
+        content: event.target.value,
       });
     }
-  }
+  };
 
   const handleAddPlanner = async (event) => {
     console.log(event.key);
@@ -48,55 +48,55 @@ export const Modal = ({ isOpen, close, type, planners }) => {
           method: "POST",
           body: JSON.stringify({ name: newPlannerName }),
         });
-        return await request.json()
+        return await request.json();
       } catch (error) {
-        console.log(error)
-        throw new Error(error)
+        console.log(error);
+        throw new Error(error);
       }
       close();
     }
-  }
-
+  };
 
   return (
     <>
       {type === "task"
         ? isOpen && (
-          <>
-            <div className="modal__bg" onClick={() => close()}></div>
-            <div className="modal__inner">
-              <div className="modal__controls" onClick={() => close()}>
-                x
+            <>
+              <div className="modal__bg" onClick={() => close()}></div>
+              <div className="modal__inner">
+                <div className="modal__controls" onClick={() => close()}>
+                  x
+                </div>
+                <h2>Create new task</h2>
+                <small>Press enter to create</small>
+                <input type="text" onKeyUp={(e) => handleAddTask(e)} />
+                <h3>Choose a planner</h3>
+                <div className="modal__planners">
+                  {planners?.map((planner) => {
+                    return (
+                      <div className={planner.id === select ? "option__modal--click" : "option__modal"} onClick={() => setSelect(planner.id)}>
+                        {planner.name}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>{" "}
+            </>
+          )
+        : isOpen &&
+          type === "planner" && (
+            <>
+              <div className="modal__bg" onClick={() => close()}></div>
+              <div className="modal__inner">
+                <div className="modal__controls" onClick={() => close()}>
+                  x
+                </div>
+                <h2>Create new planner</h2>
+                <small>Press enter to create</small>
+                <input type="text" onChange={(e) => setNewPlannerName(e.target.value)} onKeyUp={(e) => handleAddPlanner(e)} />
               </div>
-              <h2>Create new task</h2>
-              <small>Press enter to create</small>
-              <input type="text" onKeyUp={(e) => handleAddTask(e)} />
-              <h3>Choose a planner</h3>
-              <div className="modal__planners">
-                {planners?.map((planner) => {
-                  return (
-                    <div className={planner.id === select ? "option__modal--click" : "option__modal"} onClick={() => setSelect(planner.id)}>
-                      {planner.name}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>{" "}
-          </>
-        )
-        : isOpen && type === "planner" && (
-          <>
-            <div className="modal__bg" onClick={() => close()}></div>
-            <div className="modal__inner">
-              <div className="modal__controls" onClick={() => close()}>
-                x
-              </div>
-              <h2>Create new planner</h2>
-              <small>Press enter to create</small>
-              <input type="text" onChange={(e) => setNewPlannerName(e.target.value)} onKeyUp={(e) => handleAddPlanner(e)} />
-            </div>
-          </>
-        )}
+            </>
+          )}
     </>
   );
 };
