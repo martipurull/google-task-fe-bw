@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Modal.css";
 
+const { REACT_APP_URL } = process.env
+
 export const Modal = ({ isOpen, close, type, planners }) => {
   const [select, setSelect] = useState([]);
   const [newTask, setNewTask] = useState({
