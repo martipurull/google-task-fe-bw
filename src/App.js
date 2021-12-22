@@ -16,6 +16,7 @@ function App() {
   const [open, setOpen] = useState(false);
   const [openPlanner, setOpenPlanner] = useState(false);
   const [selected, setSelected] = useState("");
+  const [selectedPlanner, setSelectedPlanner] = useState({})
 
   const fetchPlanners = async () => {
     try {
@@ -23,6 +24,20 @@ function App() {
       if (response.ok) {
         const loadedPlanners = await response.json()
         setPlanners(loadedPlanners)
+      } else {
+        throw new Error('Failed to fetch!')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchSelectedPlanner = async () => {
+    try {
+      const response = await fetch(`${REACT_APP_URL}/planner/${selected}`)
+      if (response.ok) {
+        const loadedPlanner = await response.json()
+        setSelectedPlanner(loadedPlanner)
       } else {
         throw new Error('Failed to fetch!')
       }
@@ -48,6 +63,7 @@ function App() {
   }
 
   useEffect(() => fetchPlanners(), [])
+  useEffect(() => fetchSelectedPlanner(), [selected])
   useEffect(() => setTaskAsDone(), [taskToChangeIsDone])
 
 
