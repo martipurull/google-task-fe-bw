@@ -17,7 +17,7 @@ function App() {
 
   const fetchPlanners = async () => {
     try {
-      const response = await fetch(`${REACT_APP_URL}/planner`)
+      const response = await fetch(`${process.env.REACT_APP_URL}/planner`)
       if (response.ok) {
         const loadedPlanners = await response.json()
         setPlanners(loadedPlanners)
@@ -31,7 +31,7 @@ function App() {
 
   const setTaskAsDone = async () => {
     try {
-      const request = await fetch(`${REACT_APP_URL}/task/${taskIdToChange}`, {
+      const request = await fetch(`${process.env.REACT_APP_URL}/task/${taskIdToChange}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
